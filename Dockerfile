@@ -1,13 +1,9 @@
-FROM gcr.io/google_containers/ubuntu-slim:0.4
-MAINTAINER Shingo Omura <everpeace@gmail.com>
+FROM alpine:3.24.4
+LABEL maintainer="Shingo Omura <everpeace@gmail.com>"
 
-# Disable prompts from apt.
-ENV DEBIAN_FRONTEND noninteractive
+RUN apk upgrade --no-cache && \
+    apk add --no-cache curl jq bash bind-tools ca-certificates
 
-RUN apt-get update -y &&\
- apt-get install -y --no-install-recommends curl jq bash dnsutils ca-certificates && \
- apt-get autoremove -y && \
- apt-get clean -y && \
- rm -rf /tmp/* /var/tmp/* /var/cache/apt/archives/* /var/lib/apt/lists/*
-
-CMD ["tail", "-F", "-n0", "/etc/hosts" ]
+USER nobody
+HEALTHCHECK NONE
+CMD ["tail", "-F", "-n0", "/etc/hosts"]

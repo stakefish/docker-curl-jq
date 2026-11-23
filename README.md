@@ -1,2 +1,2 @@
 # docker-curl-jq
-ubuntu-slim based curl + jq box
+alpine based curl + jq box
